@@ -613,8 +613,11 @@ def main():
         with open("persistent_cases_graph.html", "rb") as f:
             st.download_button("인터랙티브 그래프 HTML 다운로드", f, file_name="persistent_cases_graph.html", mime="text/html")
 
-        with open("cyberbullying_statement.md", "rb") as f:
-            st.download_button("진술서(MD 파일) 다운로드", f, file_name="cyberbullying_statement.md", mime="text/markdown")
+        if generated is None:
+            st.error("진술서 생성에 실패했습니다. 다시 시도해주세요.")
+        else:
+            with open("cyberbullying_statement.md", "rb") as f:
+                st.download_button("진술서(MD 파일) 다운로드", f, file_name="cyberbullying_statement.md", mime="text/markdown")
 
 if __name__ == "__main__":
     main()
