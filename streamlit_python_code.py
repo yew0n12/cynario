@@ -55,7 +55,6 @@ from collections import defaultdict
 from datetime import datetime, timedelta
 from gensim import corpora
 from gensim.models import LdaModel
-from konlpy.tag import Okt
 from torch.utils.data import Dataset, DataLoader
 import logging
 import matplotlib.colors as colors
