@@ -1,6 +1,6 @@
 streamlit
 sentence-transformers==2.2.2
-transformers==4.30.2
+transformers==4.28.1
 torch==2.2.0
 huggingface-hub==0.24.1
 numpy==1.26.4
