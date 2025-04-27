@@ -30,7 +30,6 @@ huggingface_output.txt, persistent_case.html을 사용자에게 제공하는 그
 
 import streamlit as st
 import matplotlib.pyplot as plt
-import matplotlib.font_manager as fm
 from sentence_transformers import SentenceTransformer
 from sentence_transformers import SentenceTransformer, util
 import sentence_transformers
@@ -66,10 +65,6 @@ import plotly.graph_objects as go
 import matplotlib
 import requests
 
-# matplotlib 기본 한글 폰트 설정
-font_path = 'C:/Windows/Fonts/NanumGothic.ttf'
-fontprop = fm.FontProperties(fname=font_path).get_name()
-plt.rc('font', family=fontprop)
 
 class ChatParser:
     DATE_PATTERN = re.compile(r"--------------- (\d+)년 (\d+)월 (\d+)일 [월화수목금토일]요일 ---------------")
@@ -355,7 +350,7 @@ class SentimentInteractionAnalyzer:
             plt.style.use('default')
         plt.figure(figsize=(14, 12), facecolor='white')
         nx.draw_networkx_nodes(G, pos, node_color='white', edgecolors='black', linewidths=2, node_size=[node_sizes[n] for n in G.nodes()])
-        nx.draw_networkx_labels(G, pos, font_size=14, font_weight='bold')
+        nx.draw_networkx_labels(G, pos, _size=14, font_weight='bold')
         edges = G.edges(data=True)
         weights = [d['weight'] for _, _, d in edges]
         max_w = max(weights) if weights else 1
@@ -582,11 +577,7 @@ def main():
         with open(temp_path, "wb") as f:
             f.write(uploaded_file.getbuffer())
 
-        # 한글 폰트 설정
-        font_path = 'C:/Windows/Fonts/NanumGothic.ttf'
-        fontprop = fm.FontProperties(fname=font_path)
-        plt.rc('font', family=fontprop)
-        plt.rcParams['axes.unicode_minus'] = False
+        
 
         # 모델 준비
         similarity_model = SentenceTransformer('snunlp/KR-SBERT-V40K-klueNLI-augSTS')
