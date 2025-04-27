@@ -1,12 +1,9 @@
-streamlit
 sentence-transformers==2.2.2
 transformers==4.31.0
 huggingface-hub==0.24.1
 torch==2.2.0
-numpy
-gensim
-emoji
-konlpy
+streamlit
+numpy==1.24.3
 pandas
 networkx
 seaborn
@@ -17,3 +14,6 @@ joblib
 matplotlib
 python-dotenv
 requests
+gensim
+emoji
+konlpy
