@@ -1,0 +1,16 @@
+sentence-transformers==2.2.2
+transformers==4.31.0
+huggingface-hub==0.24.1
+numpy==1.24.3
+gensim==4.3.3
+emoji
+konlpy
+streamlit
+torch
+pandas
+networkx
+seaborn
+plotly
+spacy
+tqdm
+joblib
