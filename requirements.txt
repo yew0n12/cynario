@@ -1,9 +1,10 @@
 streamlit
-sentence-transformers==2.2.2
-transformers==4.28.1
+sentence-transformers==1.2.1
+transformers==4.6.1
+tokenizers==0.10.3
 torch==2.2.0
 huggingface-hub==0.24.1
-numpy==1.26.4
+numpy
 gensim
 emoji
 konlpy
