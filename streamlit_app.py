@@ -72,6 +72,7 @@ def main():
                 mime="text/html"
             )
 
+        '''
         if generated_text and os.path.exists("cyberbullying_statement.md"):
             with open("cyberbullying_statement.md", "rb") as f:
                 st.download_button(
@@ -82,6 +83,7 @@ def main():
                 )
         else:
             st.error("❗ 진술서 파일이 생성되지 않았습니다. 다시 시도해 주세요.")
+        '''
 
 if __name__ == "__main__":
     main()
