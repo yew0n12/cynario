@@ -2,7 +2,6 @@
 
 import streamlit as st
 import matplotlib.pyplot as plt
-import matplotlib.font_manager as fm
 from sentence_transformers import SentenceTransformer
 from pathlib import Path
 
