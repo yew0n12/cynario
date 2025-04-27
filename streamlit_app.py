@@ -72,18 +72,18 @@ def main():
                 mime="text/html"
             )
 
-        '''
-        if generated_text and os.path.exists("cyberbullying_statement.md"):
-            with open("cyberbullying_statement.md", "rb") as f:
-                st.download_button(
-                    label="📝 진술서(MD 파일) 다운로드",
-                    data=f,
-                    file_name="cyberbullying_statement.md",
-                    mime="text/markdown"
-                )
-        else:
-            st.error("❗ 진술서 파일이 생성되지 않았습니다. 다시 시도해 주세요.")
-        '''
+        
+        #if generated_text and os.path.exists("cyberbullying_statement.md"):
+         #   with open("cyberbullying_statement.md", "rb") as f:
+          #      st.download_button(
+           #         label="📝 진술서(MD 파일) 다운로드",
+            #        data=f,
+             #       file_name="cyberbullying_statement.md",
+              #      mime="text/markdown"
+              #  )
+        #else:
+         #   st.error("❗ 진술서 파일이 생성되지 않았습니다. 다시 시도해 주세요.")
+
 
 if __name__ == "__main__":
     main()
