@@ -6,7 +6,7 @@ gensim==4.3.3
 emoji
 konlpy
 streamlit
-torch
+torch==2.0.0  # CPU-only 가벼운 버전
 pandas
 networkx
 seaborn
@@ -14,3 +14,6 @@ plotly
 spacy
 tqdm
 joblib
+matplotlib
+python-dotenv
+requests
