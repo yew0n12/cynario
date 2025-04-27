@@ -30,6 +30,7 @@ huggingface_output.txt, persistent_case.html을 사용자에게 제공하는 그
 
 import streamlit as st
 import matplotlib.pyplot as plt
+import matplotlib.font_manager as fm
 from sentence_transformers import SentenceTransformer
 from sentence_transformers import SentenceTransformer, util
 import sentence_transformers
@@ -65,6 +66,14 @@ import plotly.graph_objects as go
 import matplotlib
 import requests
 
+# matplotlib 기본 한글 폰트 설정
+font_path = 'C:/Windows/Fonts/NanumGothic.ttf'
+fontprop = fm.FontProperties(fname=font_path).get_name()
+plt.rc('font', family=fontprop)
+
+def extract_nouns(text):
+    # 2글자 이상 한글 단어만 추출하는 정규식 기반 함수
+    return re.findall(r'[\uac00-\ud7a3]{2,}', text)
 
 class ChatParser:
     DATE_PATTERN = re.compile(r"--------------- (\d+)년 (\d+)월 (\d+)일 [월화수목금토일]요일 ---------------")
@@ -195,7 +204,6 @@ class SentimentInteractionAnalyzer:
         self.similarity_model = similarity_model
         self.interactions = defaultdict(lambda: defaultdict(list))
         self.recent_context = []
-        self.okt = Okt()
         self.lda_model = None
         self.lda_dictionary = None
         self._init_lda()
@@ -210,6 +218,7 @@ class SentimentInteractionAnalyzer:
         if os.path.exists("lda.pkl"):
             self.lda_model, self.lda_dictionary = joblib.load("lda.pkl")
             return
+
         time_window = timedelta(minutes=10)
         groups, current_group, last_time = [], [], None
         for msg in self.messages:
@@ -221,13 +230,14 @@ class SentimentInteractionAnalyzer:
             last_time = msg['time']
         if current_group:
             groups.append(current_group)
+
         texts_tokens = []
         for group in groups:
             for text in group:
-                toks = self.okt.nouns(self._preprocess_text(text))
-                toks = [t for t in toks if len(t) > 1]
+                toks = extract_nouns(self._preprocess_text(text))
                 if toks:
                     texts_tokens.append(toks)
+
         if texts_tokens:
             self.lda_dictionary = corpora.Dictionary(texts_tokens)
             corpus = [self.lda_dictionary.doc2bow(ts) for ts in texts_tokens]
@@ -252,8 +262,7 @@ class SentimentInteractionAnalyzer:
         if last_weight > 0.5 and any(w in text for w in ['좋아', '멋져']):
             return 0.2
         if self.lda_model and self.lda_dictionary:
-            tokens = self.okt.nouns(text)
-            tokens = [t for t in tokens if len(t) > 1]
+            tokens = extract_nouns(text)
             if tokens:
                 bow = self.lda_dictionary.doc2bow(tokens)
                 topics = self.lda_model[bow]
@@ -350,7 +359,7 @@ class SentimentInteractionAnalyzer:
             plt.style.use('default')
         plt.figure(figsize=(14, 12), facecolor='white')
         nx.draw_networkx_nodes(G, pos, node_color='white', edgecolors='black', linewidths=2, node_size=[node_sizes[n] for n in G.nodes()])
-        nx.draw_networkx_labels(G, pos, _size=14, font_weight='bold')
+        nx.draw_networkx_labels(G, pos, font_size=14, font_weight='bold')
         edges = G.edges(data=True)
         weights = [d['weight'] for _, _, d in edges]
         max_w = max(weights) if weights else 1
@@ -518,7 +527,7 @@ class CyberbullyingStatementGenerator:
                 "Authorization": f"Bearer {API_TOKEN}",
                 "Content-Type": "application/json"
             }               
-            
+
             payload = {
                 "inputs": prompt,
                 "parameters": {
@@ -577,7 +586,11 @@ def main():
         with open(temp_path, "wb") as f:
             f.write(uploaded_file.getbuffer())
 
-        
+        # 한글 폰트 설정
+        font_path = 'C:/Windows/Fonts/NanumGothic.ttf'
+        fontprop = fm.FontProperties(fname=font_path)
+        plt.rc('font', family=fontprop)
+        plt.rcParams['axes.unicode_minus'] = False
 
         # 모델 준비
         similarity_model = SentenceTransformer('snunlp/KR-SBERT-V40K-klueNLI-augSTS')
