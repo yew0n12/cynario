@@ -1,5 +1,7 @@
-
-python_version < 3.12
+setuptools-distutils
+setuptools>=65.5.0
+wheel>=0.38.0
+numpy>=1.26.0
 sentence-transformers==2.2.2
 transformers==4.30.2
 huggingface-hub==0.24.1
