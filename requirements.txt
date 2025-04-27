@@ -16,5 +16,4 @@ python-dotenv
 requests
 gensim
 emoji
-konlpy
 tokenizers==0.13.3
