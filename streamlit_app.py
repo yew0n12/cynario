@@ -22,15 +22,7 @@ def main():
         with open(temp_path, "wb") as f:
             f.write(uploaded_file.getbuffer())
 
-        # 한글 폰트 설정
-        font_path = 'C:/Windows/Fonts/NanumGothic.ttf'
-        if Path(font_path).exists():
-            fontprop = fm.FontProperties(fname=font_path)
-            plt.rc('font', family=fontprop.get_name())
-        else:
-            st.warning("폰트 파일을 찾을 수 없습니다. 기본 폰트로 진행합니다.")
-
-        plt.rcParams['axes.unicode_minus'] = False
+        
 
         # 모델 불러오기
         with st.spinner("모델 로딩 중..."):
