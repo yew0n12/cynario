@@ -30,7 +30,6 @@ huggingface_output.txt, persistent_case.html을 사용자에게 제공하는 그
 
 import streamlit as st
 import matplotlib.pyplot as plt
-import matplotlib.font_manager as fm
 from sentence_transformers import SentenceTransformer
 from sentence_transformers import SentenceTransformer, util
 import sentence_transformers
@@ -58,17 +57,12 @@ from gensim.models import LdaModel
 from torch.utils.data import Dataset, DataLoader
 import logging
 import matplotlib.colors as colors
-import matplotlib.font_manager as fm
 import huggingface_hub
 import transformers
 import plotly.graph_objects as go
 import matplotlib
 import requests
 
-# matplotlib 기본 한글 폰트 설정
-font_path = 'C:/Windows/Fonts/NanumGothic.ttf'
-fontprop = fm.FontProperties(fname=font_path).get_name()
-plt.rc('font', family=fontprop)
 
 def extract_nouns(text):
     # 2글자 이상 한글 단어만 추출하는 정규식 기반 함수
@@ -585,11 +579,6 @@ def main():
         with open(temp_path, "wb") as f:
             f.write(uploaded_file.getbuffer())
 
-        # 한글 폰트 설정
-        font_path = 'C:/Windows/Fonts/NanumGothic.ttf'
-        fontprop = fm.FontProperties(fname=font_path)
-        plt.rc('font', family=fontprop)
-        plt.rcParams['axes.unicode_minus'] = False
 
         # 모델 준비
         similarity_model = SentenceTransformer('snunlp/KR-SBERT-V40K-klueNLI-augSTS')
