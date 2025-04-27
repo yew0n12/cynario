@@ -539,7 +539,7 @@ class CyberbullyingStatementGenerator:
 
                 generated_text = full_text[len(prompt):].strip()
 
-                with open(output_path, "w", encoding="utf-8") as f:
+                with open("huggingface_output.txt", "w", encoding="utf-8") as f:
                     f.write(generated_text)
 
                 return generated_text
