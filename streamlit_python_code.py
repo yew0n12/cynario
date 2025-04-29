@@ -491,61 +491,48 @@ class CyberbullyingStatementGenerator:
                 f"부정 메시지 수: {self.cases[0]['count']}, 지속 일수: {self.cases[0]['duration']}, "
                 f"메시지 예시: {self.cases[0]['messages'][:2]}"
             ])
-            png_description = (
-                f"네트워크 그래프(PNG: {self.png_path})는 가해자와 피해자 간 부정적 상호작용을 시각화하며, "
-                f"엣지 두께는 메시지 빈도, 색상은 부정 스코어를 나타냅니다."
+
+            prompt = (
+                "정보통신망 이용촉진 및 정보보호 등에 관한 법률, 형법, 성폭력처벌법, 개인정보보호법, 학교폭력예방법 등을 고려하여 "
+                "구체적 법률 조항과 실제 판례를 가능한 한 인용해 주세요.\n\n"
+                "진술서는 다음과 같은 구조를 따라야 합니다:\n"
+                "1. 서론\n2. 사실관계 요약\n3. 법적 분석\n4. 결론\n\n"
+                "다음은 활용가능한 증거입니다.\n"
+                f"{case_summary}"
             )
-            prompt = ("""당신은 대한민국 법률과 판례에 정통한 법률 전문가입니다.
 
-                        진술서는 법적 증거로 활용할 수 있어야 하며,
-                        정보통신망 이용촉진 및 정보보호 등에 관한 법률, 형법, 성폭력처벌법, 개인정보보호법, 학교폭력예방법 등을 고려하여
-                        구체적 법률 조항과 실제 판례를 가능한 한 인용해 주세요.
-
-                        진술서는 다음과 같은 구조를 따라야 합니다:
-
-                        1. 서론
-
-                        3. 법적 분석
-
-                        4. 결론
-
-                        """) + f"{case_summary}" # + {png_description}
-
-            # 토큰을 st.secrets에서 가져오기
             API_TOKEN = st.secrets["huggingface"]["api_token"]
-
-            API_URL = "https://api-inference.huggingface.co/models/facebook/opt-1.3b"
+            API_URL = "https://api.together.xyz/inference"
 
             headers = {
-                "Authorization": f"Bearer {API_TOKEN}",
+                "Authorization": f"Bearer {API_KEY}",
                 "Content-Type": "application/json"
-            }               
-
-            payload = {
-                "inputs": prompt,
-                "parameters": {
-                    "temperature": 0.7,
-                    "max_new_tokens": 256,
-                    "top_p": 0.9,
-                    "repetition_penalty": 1.1
-                }
             }
 
-            response = requests.post(API_URL, headers=headers, json=payload)
-            print(response.text)
+            data = {
+                "model": "mistralai/Mistral-7B-Instruct-v0.1",
+                "prompt": prompt,
+                "temperature": 0.7,
+                "max_tokens": 512,
+                "top_p": 0.9
+            }
+
+            response = requests.post(API_URL, headers=headers, json=data)
+
             if response.status_code == 200:
-                output = response.json()
-                full_text = output[0]['generated_text']
-
-                generated_text = full_text[len(prompt):].strip()
-
-                with open("huggingface_output.txt", "w", encoding="utf-8") as f:
-                    f.write(generated_text)
-
-                return generated_text
+                try:
+                    resp_json = response.json()
+                    choices = resp_json.get("output", {}).get("choices", [])
+                    if choices and "text" in choices[0]:
+                        result = choices[0]["text"].strip()
+                        with open("huggingface_output.txt", "w", encoding="utf-8") as f:
+                            f.write(result)
+                        return result
+                    else:
+                        return None
+                except Exception as e:
+                    return None
             else:
-                print(f"Error: {response.status_code}")
-                print(response.text)
                 return None
 
         except Exception as e:
@@ -553,16 +540,13 @@ class CyberbullyingStatementGenerator:
             raise
 
     def deliver_to_victim(self):
-        """피해자에게 결과 파일 전달 (간소화된 출력)"""
         try:
             message = (
-                "피해자님, 다음 파일을 확인해주세요:\n"
+                f"피해자님, 다음 파일을 확인해주세요:\n"
                 f"- CSV: {self.csv_path}\n"
                 f"- PNG: {self.png_path}\n"
                 f"- HTML (인터랙티브 그래프): {self.html_path}\n"
             )
-            print(message)
-            logging.info("피해자에게 결과 파일 전달 메시지 출력")
         except Exception as e:
             logging.error(f"피해자 전달 실패: {e}")
             raise
