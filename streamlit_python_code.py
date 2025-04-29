@@ -33,7 +33,8 @@ import matplotlib.pyplot as plt
 from sentence_transformers import SentenceTransformer
 from sentence_transformers import SentenceTransformer, util
 import sentence_transformers
-similarity_model = SentenceTransformer('snunlp/KR-SBERT-V40K-klueNLI-augSTS')
+similarity_model = SentenceTransformer('./saved_model')
+
 import os
 import re
 import csv
