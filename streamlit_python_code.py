@@ -582,7 +582,7 @@ def main():
             png_path='persistent_cases_graph.png',
             html_path='persistent_cases_graph.html'
         )
-        generated = statement_generator.generate_statement("cyberbullying_statement.md")
+        generated = statement_generator.generate_statement("huggingface_output.txt")
         statement_generator.deliver_to_victim()
 
         # 파일 다운로드 버튼 만들기
@@ -600,8 +600,8 @@ def main():
         if generated is None:
             st.error("진술서 생성에 실패했습니다. 다시 시도해주세요.")
         else:
-            with open("cyberbullying_statement.md", "rb") as f:
-                st.download_button("진술서(MD 파일) 다운로드", f, file_name="cyberbullying_statement.md", mime="text/markdown")
+            with open("huggingface_output.txt", "rb") as f:
+                st.download_button("진술서(MD 파일) 다운로드", f, file_name="huggingface_output.txt", mime="text/markdown")
 
 if __name__ == "__main__":
     main()
