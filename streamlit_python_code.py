@@ -565,7 +565,7 @@ def main():
 
 
         # 모델 준비
-        similarity_model = SentenceTransformer('snunlp/KR-SBERT-V40K-klueNLI-augSTS')
+        similarity_model = SentenceTransformer('./saved_model')
 
         # 파싱 시작
         parser = ChatParser()
