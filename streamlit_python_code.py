@@ -426,7 +426,7 @@ class SentimentInteractionAnalyzer:
         except Exception as e:
             logging.error(f"HTML 저장 실패: {e}")
 
-class CyberbullyingStatementGenerator:
+class CyberbullyingStatementator:
     def __init__(self, csv_path: str, png_path: str, html_path: str):
         self.csv_path = Path(csv_path)
         self.png_path = Path(png_path)
@@ -505,7 +505,7 @@ class CyberbullyingStatementGenerator:
             API_URL = "https://api.together.xyz/inference"
 
             headers = {
-                "Authorization": f"Bearer {API_KEY}",
+                "Authorization": f"Bearer {API_TOKEN}",
                 "Content-Type": "application/json"
             }
 
