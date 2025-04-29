@@ -43,7 +43,7 @@ def main():
                 png_path='persistent_cases_graph.png',
                 html_path='persistent_cases_graph.html'
             )
-            statement_generator.generate_statement("cyberbullying_statement.md")
+            generated = statement_generator.generate_statement("cyberbullying_statement.md")
             statement_generator.deliver_to_victim()
 
         st.success("분석 완료! 결과 파일을 다운로드할 수 있습니다.")
@@ -74,7 +74,8 @@ def main():
             )
 
         
-        if generate_statement and os.path.exists("huggingface_output.txt"):
+
+        if generated and os.path.exists("huggingface_output.txt"):
             with open("huggingface_output.txt", "rb") as f:
                 st.download_button(
                     label="📝 진술서(TXT 파일) 다운로드",
