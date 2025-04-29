@@ -7,7 +7,7 @@ from pathlib import Path
 
 # 너가 만든 클래스 불러오기
 # ChatParser, SentimentInteractionAnalyzer, CyberbullyingStatementGenerator 클래스는 이미 다 작성되어 있어야 함
-from streamlit_python_code import ChatParser, SentimentInteractionAnalyzer, CyberbullyingStatementGenerator
+from streamlit_python_code import ChatParser, SentimentInteractionAnalyzer, CyberbullyingStatementator
 
 def main():
     st.title("사이버불링 자동 분석 시스템")
