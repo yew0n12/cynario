@@ -485,10 +485,6 @@ class CyberbullyingStatementator:
     #         raise
 
     def generate_statement(self, output_path: str):
-        if not self.cases:
-            logging.error("생성할 진술서가 없습니다 (self.cases 비어 있음)")
-            return None 
-        
         try:
             case_summary = "\n".join([
                 f"가해자: {self.cases[0]['attacker']}, 피해자: {self.cases[0]['victim']}, "
@@ -533,18 +529,15 @@ class CyberbullyingStatementator:
                             f.write(result)
                         return result
                     else:
-                        logging.error("응답에서 text 필드 없음")
                         return None
                 except Exception as e:
-                    logging.error(f"응답 파싱 실패: {e}")
                     return None
             else:
-                logging.error(f"API 호출 실패: {response.status_code}")
                 return None
 
         except Exception as e:
             logging.error(f"진술서 생성 실패: {e}")
-            return None
+            raise
 
     def deliver_to_victim(self):
         try:
