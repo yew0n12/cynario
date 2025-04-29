@@ -582,7 +582,7 @@ def main():
             png_path='persistent_cases_graph.png',
             html_path='persistent_cases_graph.html'
         )
-        statement_generator.generate_statement("cyberbullying_statement.md")
+        generated = statement_generator.generate_statement("cyberbullying_statement.md")
         statement_generator.deliver_to_victim()
 
         # 파일 다운로드 버튼 만들기
