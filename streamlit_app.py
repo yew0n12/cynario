@@ -75,7 +75,7 @@ def main():
 
         
 
-        if generated and os.path.exists("huggingface_output.txt"):
+        if generated is None:
             with open("huggingface_output.txt", "rb") as f:
                 st.download_button(
                     label="📝 진술서(TXT 파일) 다운로드",
