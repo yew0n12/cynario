@@ -486,8 +486,8 @@ class CyberbullyingStatementator:
 
     def generate_statement(self, output_path: str):
         if not self.cases:
-        logging.error("생성할 진술서가 없습니다 (self.cases 비어 있음)")
-        return None 
+            logging.error("생성할 진술서가 없습니다 (self.cases 비어 있음)")
+            return None 
         
         try:
             case_summary = "\n".join([
