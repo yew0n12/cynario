@@ -4,6 +4,7 @@ import streamlit as st
 import matplotlib.pyplot as plt
 from sentence_transformers import SentenceTransformer
 from pathlib import Path
+import os
 
 # 너가 만든 클래스 불러오기
 # ChatParser, SentimentInteractionAnalyzer, CyberbullyingStatementGenerator 클래스는 이미 다 작성되어 있어야 함
