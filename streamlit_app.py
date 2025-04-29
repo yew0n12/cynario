@@ -38,7 +38,7 @@ def main():
             analyzer.save_persistent_cases_to_csv('persistent_cases.csv')
             analyzer.visualize_persistent_cases('persistent_cases_graph.png', 'persistent_cases_graph.html')
 
-            statement_generator = CyberbullyingStatementGenerator(
+            statement_generator = CyberbullyingStatementator(
                 csv_path='persistent_cases.csv',
                 png_path='persistent_cases_graph.png',
                 html_path='persistent_cases_graph.html'
