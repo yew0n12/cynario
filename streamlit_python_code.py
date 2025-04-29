@@ -537,7 +537,7 @@ class CyberbullyingStatementator:
 
         except Exception as e:
             logging.error(f"진술서 생성 실패: {e}")
-            raise
+            return None
 
     def deliver_to_victim(self):
         try:
