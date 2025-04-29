@@ -25,7 +25,8 @@ def main():
 
         # 모델 불러오기
         with st.spinner("모델 로딩 중..."):
-            similarity_model = SentenceTransformer('snunlp/KR-SBERT-V40K-klueNLI-augSTS')
+            similarity_model = SentenceTransformer('./saved_model')
+
 
         # 분석 시작
         with st.spinner("채팅 파일 분석 중..."):
